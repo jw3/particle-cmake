@@ -1,3 +1,5 @@
+message("\n=============================== Configuring firmware for the -=-= ${PLATFORM} =-=- ===============================\n")
+
 set(CMAKE_CXX_COMPILER "${GCC_ARM_PATH}/arm-none-eabi-g++")
 
 set(PLATFORM_CXX_FLAGS
@@ -38,7 +40,7 @@ set(PLATFORM_CXX_DEFS
     PRODUCT_FIRMWARE_VERSION=65535
     USE_STDPERIPH_DRIVER
     DFU_BUILD_ENABLE
-    SYSTEM_VERSION_STRING=0.6.4
+    SYSTEM_VERSION_STRING=${FIRMWARE_VERSION}
     RELEASE_BUILD
     SPARK=1
     PARTICLE=1

@@ -19,5 +19,6 @@ class ParticlePackage(ConanFile):
     requires = []
 
     def package(self):
+        self.copy("*.cmake", src="cmake")
         self.copy("*", src="bin", dst="bin")
         self.copy("*", src="share", dst="share")

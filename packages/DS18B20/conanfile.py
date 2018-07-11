@@ -19,5 +19,5 @@ class ParticlePackage(ConanFile):
     requires = "OneWire/" + version + "@jw3/particle"
 
     def package(self):
-        self.copy("*.cmake", src="cmake", dst="cmake", keep_path=True)
+        self.copy("*.cmake", src="cmake")
         self.copy("*.patch", src="patch", dst="patch", keep_path=True)

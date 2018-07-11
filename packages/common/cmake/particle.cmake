@@ -88,6 +88,4 @@ function(add_particle_remote_app name)
                        WORKING_DIRECTORY ${FIRMWARE_DIR}
                        COMMENT "Compile [${name}] as a Remote User Module for the ${PLATFORM} platform.")
 
-    configure_file(${CMAKE_SOURCE_DIR}/common/flash.mk.in ${CMAKE_BINARY_DIR}/${name}/flash.mk)
-
 endfunction(add_particle_remote_app)

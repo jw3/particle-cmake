@@ -10,12 +10,14 @@ def lookup(name, default = None):
     return os.getenv("CONAN_" + name, v)
 
 class ParticlePackage(ConanFile):
-    name = "TinyGpsPlus"
+    name = "particle-common"
     version = lookup("VERSION", "snapshot")
     settings = "os", "compiler", "build_type", "arch"
     url = "https://github.com/jw3/particle-cmakes"
+    exports = build_dir + "/VERSION"
     generators = "cmake"
     requires = []
 
     def package(self):
-        self.copy("*.cmake", src="cmake")
+        self.copy("*", src="bin", dst="bin")
+        self.copy("*", src="share", dst="share")

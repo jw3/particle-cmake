@@ -14,8 +14,9 @@ class ParticlePackage(ConanFile):
     version = lookup("VERSION", "snapshot")
     settings = "os", "compiler", "build_type", "arch"
     url = "https://github.com/jw3/particle-cmakes"
+    exports = build_dir + "/VERSION"
     generators = "cmake"
     requires = []
 
     def package(self):
-        self.copy("*.cmake", src="cmake")
+        self.copy("*.cmake", src="cmake", dst="cmake", keep_path=True)

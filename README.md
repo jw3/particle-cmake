@@ -1,4 +1,4 @@
-particle cmake support
+Particle and CMake with Conan
 ===
 
-this is a collection of cmake configuration to support particle firmware development using cmake
+This is a collection of Conan packages providing the build configuration to support Particle firmware development with CMake.

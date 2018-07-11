@@ -30,6 +30,9 @@ build() {
   conan export-pkg DS18B20 "$conanuser/$conanchannel" -f
   conan export-pkg TinyGpsPlus "$conanuser/$conanchannel" -f
   conan export-pkg LiquidCrystalI2C "$conanuser/$conanchannel" -f
+  conan export-pkg AssetTrackerRK "$conanuser/$conanchannel" -f
+  conan export-pkg LIS3DH "$conanuser/$conanchannel" -f
+  conan export-pkg NeoGPS "$conanuser/$conanchannel" -f
 }
 
 

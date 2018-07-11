@@ -1,0 +1,6 @@
+[requires]
+particle-common/0.1.0@jw3/particle
+TinyGpsPlus/0.1.0@jw3/particle
+
+[generators]
+cmake

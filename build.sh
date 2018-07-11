@@ -26,8 +26,6 @@ build() {
 
   # export each conan package
   conan export-pkg common "$conanuser/$conanchannel" -f
-  conan export-pkg photon "$conanuser/$conanchannel" -f
-  conan export-pkg electron "$conanuser/$conanchannel" -f
   conan export-pkg OneWire "$conanuser/$conanchannel" -f
   conan export-pkg DS18B20 "$conanuser/$conanchannel" -f
   conan export-pkg TinyGpsPlus "$conanuser/$conanchannel" -f

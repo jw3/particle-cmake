@@ -13,5 +13,6 @@ set(BUILD_DIR ${CMAKE_BINARY_DIR})
 set(GCC_ARM_PATH /usr/local/gcc-arm/bin/)
 set(FIRMWARE_DIR /usr/local/src/particle/firmware)
 
-include(${PLATFORM})
-include(particle)
+message("including ${CMAKE_CURRENT_SOURCE_DIR} cmake dir")
+include(${PLATFORM} NO_POLICY_SCOPE)
+include(particle NO_POLICY_SCOPE)

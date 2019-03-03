@@ -14,7 +14,7 @@ _checkec() { ec=${?}; _checkerr ${ec} "$1"; }
 build() {
   IFS=' ' read -r -a ext_cmake_args <<< "$CMAKE_ARGS"
 
-  if [ ! -d ${builddir} ]; then mkdir -p "$builddir"; fi
+  if [[ ! -d ${builddir} ]]; then mkdir -p "$builddir"; fi
   cd ${builddir}
   cmake ${ext_cmake_args[@]} ${sourcedir}
   _checkec "cmake"
@@ -25,19 +25,19 @@ build() {
   export BUILD_DIR=${builddir}
 
   # export each conan package
-  conan export-pkg common "$conanuser/$conanchannel" -f -s compiler.version=5
-  conan export-pkg OneWire "$conanuser/$conanchannel" -f -s compiler.version=5
-  conan export-pkg DS18B20 "$conanuser/$conanchannel" -f -s compiler.version=5
-  conan export-pkg TinyGpsPlus "$conanuser/$conanchannel" -f -s compiler.version=5
-  conan export-pkg LiquidCrystalI2C "$conanuser/$conanchannel" -f -s compiler.version=5
-  conan export-pkg AssetTrackerRK "$conanuser/$conanchannel" -f -s compiler.version=5
-  conan export-pkg LIS3DH "$conanuser/$conanchannel" -f -s compiler.version=5
-  conan export-pkg NeoGPS "$conanuser/$conanchannel" -f -s compiler.version=5
+  _exportpkg common
+  _exportpkg OneWire
+  _exportpkg DS18B20
+  _exportpkg TinyGpsPlus
+  _exportpkg LiquidCrystalI2C
+  _exportpkg AssetTrackerRK
+  _exportpkg LIS3DH
+  _exportpkg NeoGPS
 }
 
 
 publish() {
-  if [ ! -d ${builddir} ]; then mkdir -p "$builddir"; fi
+  if [[ ! -d ${builddir} ]]; then mkdir -p "$builddir"; fi
   cd ${builddir}
   cmake ${sourcedir}
 
@@ -45,16 +45,27 @@ publish() {
   remote="${CONAN_REMOTE:-particle-bintray}"
 
   _echoerr "conan upload $conanuser/$conanchannel"
-  conan upload "particle-common/$version@$conanuser/$conanchannel" -c -r "$remote" --all
-  conan upload "OneWire/$version@$conanuser/$conanchannel" -c -r "$remote" --all
-  conan upload "DS18B20/$version@$conanuser/$conanchannel" -c -r "$remote" --all
-  conan upload "TinyGpsPlus/$version@$conanuser/$conanchannel" -c -r "$remote" --all
-  conan upload "LiquidCrystalI2C/$version@$conanuser/$conanchannel" -c -r "$remote" --all
-  conan upload "AssetTrackerRK/$version@$conanuser/$conanchannel" -c -r "$remote" --all
-  conan upload "LIS3DH/$version@$conanuser/$conanchannel" -c -r "$remote" --all
-  conan upload "NeoGPS/$version@$conanuser/$conanchannel" -c -r "$remote" --all
+  publishpkg particle-common
+  publishpkg OneWire
+  publishpkg DS18B20
+  publishpkg TinyGpsPlus
+  publishpkg LiquidCrystalI2C
+  publishpkg AssetTrackerRK
+  publishpkg LIS3DH
+  publishpkg NeoGPS
 }
 
+
+_exportpkg() {
+  local name="$1"
+  conan export-pkg "$name" "$conanuser/$conanchannel" -f -s compiler.version=5
+}
+
+
+_publishpkg() {
+  local name="$1"
+  conan upload "$name/$version@$conanuser/$conanchannel" -c -r "$remote" --all
+}
 
 case "${1,,}" in
   ("publish") publish ;;

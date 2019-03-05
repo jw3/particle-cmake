@@ -79,7 +79,11 @@ class ParticleFirmware(ConanFile):
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/platform/{self.platform}"))
         # self.copy("*.a", dst="lib", keep_path=False, src=fw_src('build/arm/linker'))
 
-        # cmake
+        # ld scripts
+        self.copy("*.ld", dst="modules/shared", src=fw_src("modules/shared"))
+        self.copy("*.ld", dst=f"modules/{self.platform_name}", src=fw_src(f"modules/{self.platform_name}"))
+
+    # cmake
         self.copy(f"{self.platform_name}.cmake", dst='', keep_path=False, src='packages/common/cmake')
 
     def package_info(self):

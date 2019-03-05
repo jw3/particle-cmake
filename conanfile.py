@@ -66,9 +66,7 @@ class ParticleFirmware(ConanFile):
         self.copy("*.h", dst="include", src=fw_src("dynalib/inc"))
         self.copy("*.h", dst="include", src=fw_src("rt-dynalib/inc"))
 
-        # firmware archives;; also autogen someday
-        self.copy("STM32F2xx_Peripheral_Libraries.a", dst="lib", keep_path=False, src=fw_src(f"hal/src/{self.platform_name}/lib"))
-        self.copy("*.a", dst="lib", keep_path=False, src=fw_src('build/arm/linker/stm32f2xx'))
+        # firmware static libs
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src('build/target/services-dynalib/arm'))
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/hal-dynalib/{self.platform}"))
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/system-dynalib/{self.platform}"))
@@ -77,9 +75,12 @@ class ParticleFirmware(ConanFile):
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/wiring_globals/{self.platform}"))
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/communication-dynalib/{self.platform}"))
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/platform/{self.platform}"))
-        # self.copy("*.a", dst="lib", keep_path=False, src=fw_src('build/arm/linker'))
+
+        # hal libs
+        self.copy("*.a", dst=f"hal/src/{self.platform_name}/lib", keep_path=True, src=fw_src(f"hal/src/{self.platform_name}/lib"))
 
         # ld scripts
+        self.copy("*.ld", dst="linker", src=fw_src("build/arm/linker"))
         self.copy("*.ld", dst="modules/shared", src=fw_src("modules/shared"))
         self.copy("*.ld", dst=f"modules/{self.platform_name}", src=fw_src(f"modules/{self.platform_name}"))
 

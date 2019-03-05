@@ -20,7 +20,7 @@ class ParticleFirmware(ConanFile):
     generators = "cmake"
     platform_name = "photon"
     platform = "platform-6-m"
-    app_dir = os.path.join(os.getcwd(), "build2/firmware/user/applications/tinker")
+    app_dir = os.path.join(os.getcwd(), "build-2/firmware/user/applications/tinker")
 
     def source(self):
         self.run(f"git clone --single-branch -b v{self.version} file:///usr/local/src/particle/firmware")

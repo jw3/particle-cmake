@@ -67,21 +67,20 @@ class ParticleFirmware(ConanFile):
         self.copy("*.h", dst="include", src=fw_src("rt-dynalib/inc"))
 
         # firmware archives;; also autogen someday
-        self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"hal/src/{self.platform_name}/lib"))
+        self.copy("STM32F2xx_Peripheral_Libraries.a", dst="lib", keep_path=False, src=fw_src(f"hal/src/{self.platform_name}/lib"))
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src('build/arm/linker/stm32f2xx'))
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src('build/target/services-dynalib/arm'))
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/hal-dynalib/{self.platform}"))
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/system-dynalib/{self.platform}"))
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/rt-dynalib/{self.platform}"))
-        self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/wiring-dynalib/{self.platform}"))
+        self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/wiring/{self.platform}"))
+        self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/wiring_globals/{self.platform}"))
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/communication-dynalib/{self.platform}"))
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/platform/{self.platform}"))
-        self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"hal/src/{self.platform_name}/lib"))
-        self.copy("*.a", dst="lib", keep_path=False, src=fw_src('build/arm/linker'))
+        # self.copy("*.a", dst="lib", keep_path=False, src=fw_src('build/arm/linker'))
 
         # cmake
         self.copy(f"{self.platform_name}.cmake", dst='', keep_path=False, src='packages/common/cmake')
 
-
-def package_info(self):
-        self.cpp_info.libs = ["hello"]
+    def package_info(self):
+        self.cpp_info.libs = self.collect_libs()

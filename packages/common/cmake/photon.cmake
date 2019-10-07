@@ -72,6 +72,7 @@ set(PLATFORM_CXX_INCLUDES
     ${FIRMWARE_DIR}/system/inc
     ${FIRMWARE_DIR}/services/inc
     ${FIRMWARE_DIR}/communication/src
+    ${FIRMWARE_DIR}/communication/inc
     ${FIRMWARE_DIR}/hal/inc
     ${FIRMWARE_DIR}/hal/shared
     ${FIRMWARE_DIR}/hal/src/photon

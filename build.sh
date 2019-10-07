@@ -7,6 +7,9 @@ readonly conanpath="${CONAN_PATH:-${sourcedir}}"
 readonly conanuser="${CONAN_USER:-jw3}"
 readonly conanchannel="${CONAN_CHANNEL:-stable}"
 
+readonly cross_compiler_root=${CROSS_COMPILER_ROOT:-/usr/local/gcc-arm}
+readonly compiler_major_version=$("${cross_compiler_root}/bin/arm-none-eabi-gcc" -dumpspecs | grep *version -A1 | tail -n1 | cut -d. -f1)
+
 _echoerr() { if [[ ${QUIET} -ne 1 ]]; then echo "[debug]: $@" 1>&2; fi }
 _checkerr() { ec=${1}; if [[ ${ec} -ne 0 ]]; then _echoerr "$2 failed with error code $ec"; exit ${ec}; fi }
 _checkec() { ec=${?}; _checkerr ${ec} "$1"; }
@@ -25,14 +28,14 @@ build() {
   export BUILD_DIR=${builddir}
 
   # export each conan package
-  conan export-pkg common "$conanuser/$conanchannel" -f
-  conan export-pkg OneWire "$conanuser/$conanchannel" -f
-  conan export-pkg DS18B20 "$conanuser/$conanchannel" -f
-  conan export-pkg TinyGpsPlus "$conanuser/$conanchannel" -f
-  conan export-pkg LiquidCrystalI2C "$conanuser/$conanchannel" -f
-  conan export-pkg AssetTrackerRK "$conanuser/$conanchannel" -f
-  conan export-pkg LIS3DH "$conanuser/$conanchannel" -f
-  conan export-pkg NeoGPS "$conanuser/$conanchannel" -f
+  conan export-pkg common "$conanuser/$conanchannel" -s compiler.version="$compiler_major_version" -f
+  conan export-pkg OneWire "$conanuser/$conanchannel" -s compiler.version="$compiler_major_version" -f
+  conan export-pkg DS18B20 "$conanuser/$conanchannel" -s compiler.version="$compiler_major_version" -f
+  conan export-pkg TinyGpsPlus "$conanuser/$conanchannel" -s compiler.version="$compiler_major_version" -f
+  conan export-pkg LiquidCrystalI2C "$conanuser/$conanchannel" -s compiler.version="$compiler_major_version" -f
+  conan export-pkg AssetTrackerRK "$conanuser/$conanchannel" -s compiler.version="$compiler_major_version" -f
+  conan export-pkg LIS3DH "$conanuser/$conanchannel" -s compiler.version="$compiler_major_version" -f
+  conan export-pkg NeoGPS "$conanuser/$conanchannel" -s compiler.version="$compiler_major_version" -f
 }
 
 

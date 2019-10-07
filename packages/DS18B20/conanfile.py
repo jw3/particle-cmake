@@ -16,7 +16,7 @@ class ParticlePackage(ConanFile):
     url = "https://github.com/jw3/particle-cmakes"
     exports = build_dir + "/VERSION"
     generators = "cmake"
-    requires = "OneWire/" + version + "@jw3/particle"
+    requires = "OneWire/" + version + "@jw3/stable"
 
     def package(self):
         self.copy("*.cmake", src="cmake")

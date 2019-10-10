@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-readonly fwversion="$FIRMWARE_VERSION"
-
 if [ -z "$1" ]; then echo "usage: build.sh <platform>"; exit 1; fi
 
 readonly platform="$1"
 readonly builddir="build-$platform"
+readonly cross_compiler_root=${CROSS_COMPILER_ROOT:-/usr/local/gcc-arm}
+readonly compiler_major_version=$("${cross_compiler_root}/bin/arm-none-eabi-gcc" -dumpspecs | grep *version -A1 | tail -n1 | cut -d. -f1)
 
 if [[ "$2" != "quick" ]]; then
   rm -rf "$builddir"
@@ -14,7 +14,7 @@ fi
 
 if [ ! -d "$builddir" ]; then mkdir "$builddir"; fi
 
-conan install . -if="$builddir"
+conan install . -if="$builddir" -s compiler.version="$compiler_major_version"
 cd "$builddir"
-cmake .. -DPLATFORM="$platform" -DFIRMWARE_VERSION="$fwversion"
+cmake .. -DPLATFORM="$platform"
 make -j1

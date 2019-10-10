@@ -1,6 +1,7 @@
 [requires]
-particle-common/0.1.0@jw3/particle
-TinyGpsPlus/0.1.0@jw3/particle
+particle-common/0.2.2@jw3/stable
+TinyGpsPlus/0.2.2@jw3/stable
+TMCStepper/0.2.2@jw3/stable
 
 [generators]
 cmake

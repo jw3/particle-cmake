@@ -7,7 +7,7 @@ externalproject_add(
         ${DS18B20_Install}
         GIT_REPOSITORY https://github.com/tomdeboer/SparkCoreDallasTemperature.git
         GIT_TAG 5f5dbea7cb131eb801dfb1fec0338df0a20dced9
-        PATCH_COMMAND ${CMAKE_SOURCE_DIR}/patches/apply.sh DS18B20
+        PATCH_COMMAND ${CONAN_PARTICLE-COMMON_ROOT}/bin/apply.sh ${CONAN_DS18B20_ROOT}/patch
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
         INSTALL_COMMAND ""

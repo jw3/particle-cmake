@@ -6,7 +6,7 @@ include(OneWire)
 externalproject_add(
         ${DS18B20_Install}
         GIT_REPOSITORY https://github.com/tomdeboer/SparkCoreDallasTemperature.git
-        GIT_TAG master
+        GIT_TAG 5f5dbea7cb131eb801dfb1fec0338df0a20dced9
         PATCH_COMMAND ${CMAKE_SOURCE_DIR}/patches/apply.sh DS18B20
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""

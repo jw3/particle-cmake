@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -ex
+
 readonly sourcedir="${SOURCE_DIR:-${PWD}}"
 readonly builddir="${BUILD_DIR:-${sourcedir}/build}"
 
@@ -17,6 +19,11 @@ _checkec() { ec=${?}; _checkerr ${ec} "$1"; }
 build() {
   IFS=' ' read -r -a ext_cmake_args <<< "$CMAKE_ARGS"
 
+  if [[ "$2" != "quick" ]]; then
+    rm -rf "$builddir"
+    mkdir "$builddir"
+  fi
+
   if [ ! -d ${builddir} ]; then mkdir -p "$builddir"; fi
   cd ${builddir}
   cmake ${ext_cmake_args[@]} ${sourcedir}
@@ -28,7 +35,9 @@ build() {
   export BUILD_DIR=${builddir}
 
   for pkg in *; do
-    conan export-pkg ${pkg} "$conanuser/$conanchannel" -s compiler.version="$compiler_major_version" -f
+    export PKG_SRC_DIR="${sourcedir}/packages/$pkg"
+    conan source ${PKG_SRC_DIR} -sf ${builddir}/${pkg}
+    conan export-pkg ${PKG_SRC_DIR} "$conanuser/$conanchannel" -s compiler.version="$compiler_major_version" -sf ${builddir}/${pkg} -f
   done
 }
 

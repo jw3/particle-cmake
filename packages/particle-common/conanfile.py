@@ -13,7 +13,7 @@ class ParticlePackage(ConanFile):
     name = "particle-common"
     version = lookup("VERSION", "snapshot")
     settings = "os", "compiler", "build_type", "arch"
-    url = "https://github.com/jw3/particle-cmakes"
+    url = "https://github.com/jw3/conan-particle"
     exports = build_dir + "/VERSION"
     generators = "cmake"
     requires = []

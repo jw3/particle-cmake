@@ -2,7 +2,7 @@ from conans import ConanFile, tools
 import os
 
 repo_url = 'https://github.com/rickkas7/AssetTrackerRK.git'
-commit_sha='b913c5ac4967e83c466d8f079857ef349f8e7f69'
+commit_sha = 'b913c5ac4967e83c466d8f079857ef349f8e7f69'
 build_dir = os.getenv("BUILD_DIR", "build")
 source_dir = os.getenv("PKG_SRC_DIR", None)
 

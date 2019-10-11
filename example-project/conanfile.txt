@@ -1,6 +1,6 @@
 [requires]
-particle-common/0.2.2@jw3/stable
-TinyGpsPlus/0.2.2@jw3/stable
+particle-common/snapshot@jw3/stable
+TinyGpsPlus/snapshot@jw3/stable
 
 [generators]
 cmake

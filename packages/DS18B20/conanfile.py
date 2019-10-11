@@ -25,7 +25,6 @@ class ParticlePackage(ConanFile):
 
     def package(self):
         self.copy("*.cmake", src=f"{source_dir}/cmake")
-        self.copy("*.patch", src="patch", dst="patch", keep_path=True)
         self.copy("*.c*", dst="src", src='firmware')
         self.copy("*.h*", dst="include", src='firmware')
 

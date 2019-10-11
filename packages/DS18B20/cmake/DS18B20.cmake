@@ -1,29 +1,10 @@
-include(ExternalProject)
-set(DS18B20_Install ds18b20)
-
+set(DS18B20 ${CONAN_DS18B20_ROOT})
 include(OneWire)
 
-externalproject_add(
-        ${DS18B20_Install}
-        GIT_REPOSITORY https://github.com/tomdeboer/SparkCoreDallasTemperature.git
-        GIT_TAG 5f5dbea7cb131eb801dfb1fec0338df0a20dced9
-        PATCH_COMMAND ${CONAN_PARTICLE-COMMON_ROOT}/bin/apply.sh ${CONAN_DS18B20_ROOT}/patch
-        CONFIGURE_COMMAND ""
-        BUILD_COMMAND ""
-        INSTALL_COMMAND ""
-        UPDATE_COMMAND ""
-        LOG_DOWNLOAD ON)
-
-externalproject_get_property(${DS18B20_Install} source_dir)
-set(DS18B20 ${source_dir}/firmware)
-
-set(SOURCE_FILES ${DS18B20}/spark-dallas-temperature.cpp)
-if (NOT EXISTS ${SOURCE_FILES})
-    file(WRITE ${SOURCE_FILES})
-endif ()
+file(GLOB SOURCE_FILES ${DS18B20}/src/*)
 
 add_library(DS18B20 STATIC ${SOURCE_FILES})
-target_include_directories(DS18B20 PRIVATE ${DS18B20} ${OneWire} ${PLATFORM_CXX_INCLUDES})
+target_include_directories(DS18B20 PRIVATE ${DS18B20}/include ${OneWire}/include ${PLATFORM_CXX_INCLUDES})
 target_compile_options(DS18B20 PRIVATE "$<$<CONFIG:ALL>:${PLATFORM_CXX_FLAGS}>")
 target_compile_definitions(DS18B20 PRIVATE ${PLATFORM_CXX_DEFS})
-add_dependencies(DS18B20 ${DS18B20_Install} OneWire)
+add_dependencies(DS18B20 OneWire)

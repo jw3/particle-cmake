@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -ex
-
 readonly sourcedir="${SOURCE_DIR:-${PWD}}"
 readonly builddir="${BUILD_DIR:-${sourcedir}/build}"
 

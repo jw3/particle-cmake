@@ -1,8 +1,8 @@
 from conans import ConanFile, tools
 import os
 
-repo_url = 'https://github.com/hirotakaster/MQTT.git'
-commit_sha = ''
+repo_url = 'https://github.com/jw3/MQTT.git'
+commit_sha = 'std_function_callback'
 build_dir = os.getenv("BUILD_DIR", "build")
 source_dir = os.getenv("PKG_SRC_DIR", None)
 

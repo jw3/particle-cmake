@@ -1,12 +1,13 @@
 if (NOT PLATFORM)
     message(WARNING "defaulting to photon platform, specify with PLATFORM")
     set(PLATFORM photon)
-elseif (NOT PLATFORM MATCHES "^photon$|^electron$")
+elseif (NOT PLATFORM MATCHES "^photon$|^electron$|^argon$")
     message(FATAL_ERROR "invalid platform [${PLATFORM}] (choose 'photon' or 'electron')")
 endif ()
 
 set(BUILD_DIR ${CMAKE_BINARY_DIR})
 set(GCC_ARM_PATH /usr/local/gcc-arm/bin/)
+set(GCC_PREFIX arm-none-eabi-)
 set(FIRMWARE_DIR /usr/local/src/particle/firmware)
 
 include(${PLATFORM})

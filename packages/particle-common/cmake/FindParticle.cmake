@@ -1,8 +1,8 @@
 if (NOT PLATFORM)
     message(WARNING "defaulting to photon platform, specify with PLATFORM")
     set(PLATFORM photon)
-elseif (NOT PLATFORM MATCHES "^photon$|^electron$|^argon$")
-    message(FATAL_ERROR "invalid platform [${PLATFORM}] (choose 'photon' or 'electron')")
+elseif (NOT PLATFORM MATCHES "^photon$|^electron$|^argon$|^xenon$")
+    message(FATAL_ERROR "invalid platform [${PLATFORM}] (choose 'photon' | 'electron' | 'argon' | 'xenon')")
 endif ()
 
 set(BUILD_DIR ${CMAKE_BINARY_DIR})

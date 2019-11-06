@@ -5,6 +5,8 @@ This is a collection of Conan packages providing the build configuration to supp
 
 Packages are published to https://bintray.com/jw3/particle
 
+Supports v2 and v3 boards (photon, electron, argon, boron, xenon)
+
 
 ### flashing
 

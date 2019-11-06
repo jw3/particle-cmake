@@ -2,6 +2,12 @@
 # see arm-tools.mk
 # see gcc-tools.mk
 
+# todo;; set these with appropriate path rooted to user_remote
+#-MD
+#-MP
+#-MF
+#../build/target/user/platform-14-m/workspace/application.o.d
+
 message("\n=============================== Configuring firmware for the -=-= ${PLATFORM} =-=- ===============================\n")
 
 set(CMAKE_CXX_COMPILER "${GCC_ARM_PATH}/arm-none-eabi-g++")
@@ -15,7 +21,6 @@ set(PLATFORM_CXX_FLAGS
     -mabi=aapcs
     -mfloat-abi=hard
     -mfpu=fpv4-sp-d16
-    -fno-builtin
     -ffunction-sections
     -fdata-sections
     -Wall
@@ -23,13 +28,14 @@ set(PLATFORM_CXX_FLAGS
     -Wno-error=deprecated-declarations
     -fmessage-length=0
     -fno-strict-aliasing
-    -Wundef
     -fno-builtin-malloc
     -fno-builtin-free
     -fno-builtin-realloc
     -fno-exceptions
     -fno-rtti
     -fcheck-new
+    -std=gnu++14
+    -Wundef
     )
 
 string(REPLACE ";" " " PLATFORM_CXX_FLAGS "${PLATFORM_CXX_FLAGS}")
@@ -45,18 +51,29 @@ set(PLATFORM_CXX_DEFS
     USBD_VID_SPARK=0x2B04
     USBD_PID_DFU=0xD00E
     USBD_PID_CDC=0xC00E
+    SPARK_PLATFORM
+    INCLUDE_PLATFORM=1
     SOFTDEVICE_PRESENT=1
     S140
-    INCLUDE_PLATFORM=1
+    PRODUCT_ID=14
+    PRODUCT_FIRMWARE_VERSION=65535
+    OPENTHREAD_PROJECT_CORE_CONFIG_FILE=\"openthread-config-project.h\"
     ENABLE_FEM=1
+    NRF_802154_PROJECT_CONFIG=\"openthread-platform-config.h\"
     RAAL_SOFTDEVICE=1
     _WIZCHIP_=W5500
     USE_STDPERIPH_DRIVER
     DFU_BUILD_ENABLE
     LFS_CONFIG=lfs_config.h
+    SYSTEM_VERSION_STRING=1.4.2
     RELEASE_BUILD
     SPARK=1
     PARTICLE=1
+    START_DFU_FLASHER_SERIAL_SPEED=14400
+    START_YMODEM_FLASHER_SERIAL_SPEED=28800
+    SPARK_PLATFORM_NET=None
+    LOG_INCLUDE_SOURCE_INFO=1
+    PARTICLE_USER_MODULE
     USER_FIRMWARE_IMAGE_SIZE=0x20000
     USER_FIRMWARE_IMAGE_LOCATION=0xD4000
     MODULAR_FIRMWARE=1
@@ -67,17 +84,17 @@ set(PLATFORM_CXX_DEFS
     MODULE_DEPENDENCY2=0,0,0
     _WINSOCK_H
     _GNU_SOURCE
-    START_DFU_FLASHER_SERIAL_SPEED=14400
-    START_YMODEM_FLASHER_SERIAL_SPEED=28800
     LOG_MODULE_CATEGORY="app"
     )
 
 set(PLATFORM_CXX_INCLUDES
     ${FIRMWARE_DIR}/user/inc
-    ${FIRMWARE_DIR}/dynalib/inc
+    ${FIRMWARE_DIR}/wiring/inc
+    ${FIRMWARE_DIR}/system/inc
+    ${FIRMWARE_DIR}/third_party/miniz/miniz
     ${FIRMWARE_DIR}/services/inc
-    ${FIRMWARE_DIR}/communication/inc
     ${FIRMWARE_DIR}/third_party/nanopb/nanopb
+    ${FIRMWARE_DIR}/communication/inc
     ${FIRMWARE_DIR}/hal/inc
     ${FIRMWARE_DIR}/hal/shared
     ${FIRMWARE_DIR}/hal/src/xenon
@@ -110,11 +127,6 @@ set(PLATFORM_CXX_INCLUDES
     ${FIRMWARE_DIR}/third_party/openthread/openthread/third_party/NordicSemiconductor/drivers/radio/rsch/raal/softdevice
     ${FIRMWARE_DIR}/third_party/wiznet_driver/wiznet_driver/Ethernet
     ${FIRMWARE_DIR}/gsm0710muxer/gsm0710muxer/include
-    ${FIRMWARE_DIR}/system/inc
-    ${FIRMWARE_DIR}/third_party/miniz/miniz
-    ${FIRMWARE_DIR}/rt-dynalib/inc
-    ${FIRMWARE_DIR}/wiring/inc
-    ${FIRMWARE_DIR}/modules/shared/nRF52840/inc
     ${FIRMWARE_DIR}/platform/shared/inc
     ${FIRMWARE_DIR}/third_party/nrf5_sdk
     ${FIRMWARE_DIR}/third_party/nrf5_sdk/nrf5_sdk/components/toolchain/cmsis/include
@@ -169,5 +181,5 @@ set(PLATFORM_CXX_INCLUDES
     ${FIRMWARE_DIR}/third_party/nrf5_sdk/nrf5_sdk/external/utf_converter
     ${FIRMWARE_DIR}/third_party/littlefs/littlefs
     ${FIRMWARE_DIR}/platform/MCU/nRF52840/inc
-    ${FIRMWARE_DIR}/modules/shared/nRF52840/inc/user-part
+    ${FIRMWARE_DIR}/dynalib/inc
     )

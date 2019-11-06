@@ -40,6 +40,7 @@ function(add_particle_remote_app name)
         PLATFORM=${PLATFORM}
         TARGET_DIR=${TARGET_DIR}
         GCC_ARM_PATH=${GCC_ARM_PATH}
+        GCC_PREFIX=${GCC_PREFIX}
         TARGET_DIR=${OUTPUT_PREFIX}
         TARGET_FILE=${name}
         USER_BUILD_DIR=${name}

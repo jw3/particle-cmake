@@ -2,7 +2,7 @@ from conans import ConanFile, tools
 import os
 
 repo_url = 'https://github.com/teemuatlut/TMCStepper.git'
-commit_sha = ''
+commit_sha = 'v0.5.2'
 build_dir = os.getenv("BUILD_DIR", "build")
 source_dir = os.getenv("PKG_SRC_DIR", None)
 
@@ -32,3 +32,5 @@ class ParticlePackage(ConanFile):
         self.run(f"git clone {repo_url} .")
         if commit_sha:
             self.run(f"git checkout {commit_sha}")
+        tools.patch(patch_file=f"{source_dir}/patch/0001-implement-transfer16.patch")
+        tools.patch(patch_file=f"{source_dir}/patch/0001-undefine-conflicts.patch")

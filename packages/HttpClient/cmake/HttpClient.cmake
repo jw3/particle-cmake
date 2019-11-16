@@ -1,0 +1,8 @@
+set(HTTPClIENT ${CONAN_HTTPClIENT_ROOT})
+
+file(GLOB SOURCE_FILES ${HTTPClIENT}/src/*)
+
+add_library(HTTPClIENT STATIC ${SOURCE_FILES})
+target_include_directories(HTTPClIENT PRIVATE ${HTTPClIENT}/include ${PLATFORM_CXX_INCLUDES})
+target_compile_options(HTTPClIENT PRIVATE "$<$<CONFIG:ALL>:${PLATFORM_CXX_FLAGS}>")
+target_compile_definitions(HTTPClIENT PRIVATE ${PLATFORM_CXX_DEFS})

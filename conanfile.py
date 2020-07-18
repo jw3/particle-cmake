@@ -81,9 +81,14 @@ class ParticleFirmware(ConanFile):
         self.copy("*.a", dst=f"hal/src/{self.platform_name}/lib", keep_path=True, src=fw_src(f"hal/src/{self.platform_name}/lib"))
 
         # ld scripts
-        self.copy("*.ld", dst="linker", src=fw_src("build/arm/linker"))
-        self.copy("*.ld", dst="modules/shared", src=fw_src("modules/shared"))
-        self.copy("*.ld", dst=f"modules/{self.platform_name}", src=fw_src(f"modules/{self.platform_name}"))
+        self.copy("module_*.ld", dst=f'linker', keep_path=True, src=fw_src(f'build/arm/linker'))
+        self.copy("*.ld", dst=f'linker', keep_path=True, src=fw_src(f'build/arm/linker/stm32f2xx'))
+        self.copy("*.ld", dst=f'linker', keep_path=True, src=fw_src(f'build/arm/linker/stm32f2xx/{self.platform_name}'))
+        self.copy("*.ld", dst=f'modules/shared/stm32f2xx', keep_path=True, src=fw_src(f'modules/shared/stm32f2xx'))
+        self.copy("*.ld", dst=f'modules/{self.platform_name}', keep_path=True, src=fw_src(f'modules/{self.platform_name}'))
+
+        # self.copy("*.ld", dst="modules/shared", src=fw_src("modules/shared"))
+        # self.copy("*.ld", dst=f"modules/{self.platform_name}", src=fw_src(f"modules/{self.platform_name}"))
 
     # cmake
         self.copy(f"{self.platform_name}.cmake", dst='', keep_path=False, src='packages/common/cmake')

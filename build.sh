@@ -5,7 +5,7 @@ readonly builddir="${BUILD_DIR:-${sourcedir}/build}"
 
 readonly conanpath="${CONAN_PATH:-${sourcedir}}"
 readonly conanuser="${CONAN_USER:-jw3}"
-readonly conanchannel="${CONAN_CHANNEL:-stable}"
+readonly conanchannel="${CONAN_CHANNEL:-pure}"
 
 _echoerr() { if [[ ${QUIET} -ne 1 ]]; then echo "[debug]: $@" 1>&2; fi }
 _checkerr() { ec=${1}; if [[ ${ec} -ne 0 ]]; then _echoerr "$2 failed with error code $ec"; exit ${ec}; fi }

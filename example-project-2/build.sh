@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-readonly builddir="build-$platform"
+readonly builddir="build-photon"
 
 if [[ "$2" != "quick" ]]; then
   rm -rf "$builddir"

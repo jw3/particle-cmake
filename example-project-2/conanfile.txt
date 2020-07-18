@@ -1,5 +1,5 @@
 [requires]
-particle/1.0.1@jw3/stable
+particle/2.0.0@jw3/pure
 
 [generators]
 cmake

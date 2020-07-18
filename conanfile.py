@@ -10,7 +10,7 @@ def fw_src(relpath):
 
 class ParticleFirmware(ConanFile):
     name = "particle"
-    version = "1.0.1"
+    version = "2.0.0"
     license = "Apache 2.0"
     url = "https://github.com/jw3/particle-conan"
     description = "Conan packages from the Particle firmware"
@@ -30,12 +30,13 @@ class ParticleFirmware(ConanFile):
 
     def package(self):
         print(os.getcwd())
+        print(self.platform)
         # headers;; hope to autogen someday
         self.copy("*.h", dst="include", src=fw_src("user/inc"))
         self.copy("*.h", dst="include", src=fw_src("wiring/inc"))
         self.copy("*.h", dst="include", src=fw_src("system/inc"))
         self.copy("*.h", dst="include", src=fw_src("services/inc"))
-        self.copy("*.h", dst="include", src=fw_src("communication/src"))
+        self.copy("*.h", dst="include", src=fw_src("communication/inc"))
         self.copy("*.h", dst="include", src=fw_src("hal/inc"))
         self.copy("*.h", dst="include", src=fw_src("hal/shared"))
         self.copy("*.h", dst="include", src=fw_src("hal/src/photon"))
@@ -67,7 +68,7 @@ class ParticleFirmware(ConanFile):
         self.copy("*.h", dst="include", src=fw_src("rt-dynalib/inc"))
 
         # firmware static libs
-        self.copy("*.a", dst="lib", keep_path=False, src=fw_src('build/target/services-dynalib/arm'))
+        self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f'build/target/services-dynalib/{self.platform}'))
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/hal-dynalib/{self.platform}"))
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/system-dynalib/{self.platform}"))
         self.copy("*.a", dst="lib", keep_path=False, src=fw_src(f"build/target/rt-dynalib/{self.platform}"))

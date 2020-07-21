@@ -88,8 +88,17 @@ set(PLATFORM_CXX_INCLUDES
     ${FIRMWARE_DIR}/platform/MCU/STM32F2xx/CMSIS/Device/ST/Include
     ${FIRMWARE_DIR}/dynalib/inc)
 
-
 set(PLATFORM_CXX_LINK_OPTIONS
+    -specs=nano.specs
+    -specs=nosys.specs
+    -nostartfiles
+    -L${CONAN_PARTICLE_ROOT}/modules/photon/system-part1
+    -L${CONAN_PARTICLE_ROOT}/modules/photon/system-part2
+    -L${CONAN_PARTICLE_ROOT}/modules/photon/user-part
+    -L${CONAN_PARTICLE_ROOT}/linker
+    -L${CONAN_PARTICLE_ROOT}/linker/stm32f2xx
+    -L${CONAN_PARTICLE_ROOT}/hal/src/photon/lib
     -Wl,--defsym,USER_FIRMWARE_IMAGE_LOCATION=0x80A0000
     -Wl,--defsym,USER_FIRMWARE_IMAGE_SIZE=0x20000
+    -Xlinker --gc-sections
     -T${CONAN_PARTICLE_ROOT}/modules/photon/user-part/linker.ld)

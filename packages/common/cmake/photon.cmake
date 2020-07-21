@@ -87,3 +87,9 @@ set(PLATFORM_CXX_INCLUDES
     ${FIRMWARE_DIR}/platform/MCU/STM32F2xx/CMSIS/Include
     ${FIRMWARE_DIR}/platform/MCU/STM32F2xx/CMSIS/Device/ST/Include
     ${FIRMWARE_DIR}/dynalib/inc)
+
+
+set(PLATFORM_CXX_LINK_OPTIONS
+    -Wl,--defsym,USER_FIRMWARE_IMAGE_LOCATION=0x80A0000
+    -Wl,--defsym,USER_FIRMWARE_IMAGE_SIZE=0x20000
+    -T${CONAN_PARTICLE_ROOT}/modules/photon/user-part/linker.ld)

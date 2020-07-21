@@ -1,22 +1,3 @@
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -specs=nano.specs -specs=nosys.specs -nostartfiles -L${CONAN_PARTICLE_ROOT}/modules/photon/system-part1 -L${CONAN_PARTICLE_ROOT}/modules/photon/system-part2 -L${CONAN_PARTICLE_ROOT}/modules/photon/user-part -L${CONAN_PARTICLE_ROOT}/linker -L${CONAN_PARTICLE_ROOT}/linker/stm32f2xx -L${CONAN_PARTICLE_ROOT}/hal/src/photon/lib")
-
-add_executable(app ${CONAN_PARTICLE_ROOT}/modules/photon/module_info.o
-                ${CONAN_PARTICLE_ROOT}/modules/photon/newlib_stubs.o
-                ${CONAN_PARTICLE_ROOT}/modules/photon/user_export.o
-                ${CONAN_PARTICLE_ROOT}/modules/photon/user_module.o
-                 application.cpp)
-target_include_directories(app PRIVATE ${CONAN_INCLUDE_DIRS})
-
-target_compile_definitions(app PRIVATE ${PLATFORM_CXX_DEFS})
-target_compile_options(app PRIVATE "$<$<CONFIG:ALL>:${PLATFORM_CXX_FLAGS}>")
-set_target_properties(app PROPERTIES
-                      OUTPUT_NAME app.elf
-                      LINK_DEPENDS ${CONAN_PARTICLE_ROOT}/modules/photon/user-part/linker.ld)
-
-
-#find_library(PARTICLE_LIBRARY NAMES ${CONAN_LIBS_PARTICLE} PATHS ${CONAN_LIB_DIRS_PARTICLE})
-#message(" ============== ${CONAN_LIB_DIRS_PARTICLE} === ${CONAN_LIBS_PARTICLE} === ${PARTICLE_LIBRARY}")
-#target_link_libraries(app PRIVATE -static -Wl,--whole-archive user hal-dynalib services-dynalib system-dynalib rt-dynalib wiring communication-dynalib platform wiring_globals -Wl,--no-whole-archive nosys --specs=nano.specs)
 set(PLATFORM_CXX_FLAGS
     -std=gnu++11
     -g3
@@ -36,9 +17,6 @@ set(PLATFORM_CXX_FLAGS
     -fno-exceptions
     -fno-rtti
     -fcheck-new)
-
-string(REPLACE ";" " " PLATFORM_CXX_FLAGS "${PLATFORM_CXX_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${PLATFORM_CXX_FLAGS}")
 
 set(PLATFORM_CXX_DEFS
     STM32_DEVICE
@@ -80,9 +58,27 @@ set(PLATFORM_CXX_DEFS
     _GNU_SOURCE
     LOG_MODULE_CATEGORY="app")
 
+set(PLATFORM_CXX_LINK_OPTIONS
+    -specs=nano.specs
+    -specs=nosys.specs
+    -nostartfiles
+    -L${CONAN_PARTICLE_ROOT}/modules/photon/system-part1
+    -L${CONAN_PARTICLE_ROOT}/modules/photon/system-part2
+    -L${CONAN_PARTICLE_ROOT}/modules/photon/user-part
+    -L${CONAN_PARTICLE_ROOT}/linker
+    -L${CONAN_PARTICLE_ROOT}/linker/stm32f2xx
+    -L${CONAN_PARTICLE_ROOT}/hal/src/photon/lib
+    -Wl,--defsym,USER_FIRMWARE_IMAGE_LOCATION=0x80A0000
+    -Wl,--defsym,USER_FIRMWARE_IMAGE_SIZE=0x20000
+    -Xlinker --gc-sections
+    -T${CONAN_PARTICLE_ROOT}/modules/photon/user-part/linker.ld)
 
+add_executable(app application.cpp)
+target_include_directories(app PRIVATE ${CONAN_INCLUDE_DIRS})
 
-
+target_compile_definitions(app PRIVATE ${PLATFORM_CXX_DEFS})
+target_compile_options(app PRIVATE "$<$<CONFIG:ALL>:${PLATFORM_CXX_FLAGS}>")
+set_target_properties(app PROPERTIES OUTPUT_NAME app.elf)
 
 set(libsss hal-dynalib services-dynalib system-dynalib rt-dynalib wiring communication-dynalib platform wiring_globals)
 
@@ -93,17 +89,14 @@ endforeach ()
 
 set(libs -Wl,--whole-archive ${libs} -Wl,--no-whole-archive)
 
-
-
-#set(CMAKE_CXX_FLAGS "-MD -MP -MF")
-
 target_compile_options(app PRIVATE "$<$<CONFIG:ALL>:${PLATFORM_CXX_FLAGS}>")
 target_compile_definitions(app PRIVATE ${PLATFORM_CXX_DEFS})
 
 
 message("============== ${libs} =================")
-target_link_libraries(app PRIVATE ${libs} -lnosys)
-target_link_options(app PRIVATE "-Xlinker" "--gc-sections" "-T${CONAN_PARTICLE_ROOT}/modules/photon/user-part/linker.ld" "-Wl,--defsym,USER_FIRMWARE_IMAGE_SIZE=0x20000" "-Wl,--defsym,USER_FIRMWARE_IMAGE_LOCATION=0x80A0000")
+file(GLOB OZE ${CONAN_PARTICLE_ROOT}/modules/*.o)
+target_link_libraries(app PRIVATE ${libs} ${OZE})
+target_link_options(app PRIVATE ${PLATFORM_CXX_LINK_OPTIONS})
 #set_target_properties(app PROPERTIES LINK_DEPENDS ${CONAN_PARTICLE_ROOT}/modules/photon/user-part/linker.ld)
 
 

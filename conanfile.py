@@ -87,6 +87,8 @@ class ParticleFirmware(ConanFile):
         self.copy("*.ld", dst=f'modules/shared/stm32f2xx', keep_path=True, src=fw_src(f'modules/shared/stm32f2xx'))
         self.copy("*.ld", dst=f'modules/{self.platform_name}', keep_path=True, src=fw_src(f'modules/{self.platform_name}'))
 
+        self.copy("*.o", dst=f'modules', keep_path=False, src=fw_src(f'user/src/target/obj/src'))
+
         # self.copy("*.ld", dst="modules/shared", src=fw_src("modules/shared"))
         # self.copy("*.ld", dst=f"modules/{self.platform_name}", src=fw_src(f"modules/{self.platform_name}"))
 
